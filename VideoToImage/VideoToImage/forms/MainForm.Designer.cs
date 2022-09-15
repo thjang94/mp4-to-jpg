@@ -45,7 +45,6 @@ namespace VideoToImage.forms
             this.lb_now_frame_value = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.lb_import_video = new System.Windows.Forms.Label();
             this.txt_import_video = new System.Windows.Forms.TextBox();
             this.btn_import_video = new System.Windows.Forms.Button();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -53,9 +52,14 @@ namespace VideoToImage.forms
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.grd_frame_point = new System.Windows.Forms.DataGridView();
+            this.check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grd_videoFileList = new System.Windows.Forms.DataGridView();
+            this.main = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
-            this.btn_make_jpg = new System.Windows.Forms.Button();
+            this.btn_add_jpg = new System.Windows.Forms.Button();
+            this.btn_export_jpg = new System.Windows.Forms.Button();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_set_end = new System.Windows.Forms.Button();
             this.btn_set_start = new System.Windows.Forms.Button();
@@ -65,7 +69,6 @@ namespace VideoToImage.forms
             this.timer_player = new System.Windows.Forms.Timer(this.components);
             this.timer_prog_state = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.main = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_preview)).BeginInit();
@@ -77,6 +80,7 @@ namespace VideoToImage.forms
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grd_frame_point)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grd_videoFileList)).BeginInit();
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
@@ -95,7 +99,7 @@ namespace VideoToImage.forms
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1262, 582);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1289, 582);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.TabStop = true;
             // 
@@ -287,45 +291,34 @@ namespace VideoToImage.forms
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(302, 582);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(329, 582);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // tableLayoutPanel4
             // 
-            this.tableLayoutPanel4.ColumnCount = 3;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 194F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tableLayoutPanel4.Controls.Add(this.lb_import_video, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.txt_import_video, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.btn_import_video, 2, 0);
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.Controls.Add(this.txt_import_video, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.btn_import_video, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(302, 36);
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(329, 36);
             this.tableLayoutPanel4.TabIndex = 0;
-            // 
-            // lb_import_video
-            // 
-            this.lb_import_video.AutoSize = true;
-            this.lb_import_video.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lb_import_video.Location = new System.Drawing.Point(3, 0);
-            this.lb_import_video.Name = "lb_import_video";
-            this.lb_import_video.Size = new System.Drawing.Size(56, 36);
-            this.lb_import_video.TabIndex = 0;
-            this.lb_import_video.Text = "영상선택";
-            this.lb_import_video.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txt_import_video
             // 
             this.txt_import_video.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_import_video.Location = new System.Drawing.Point(65, 7);
+            this.txt_import_video.Font = new System.Drawing.Font("굴림", 8F);
+            this.txt_import_video.Location = new System.Drawing.Point(3, 8);
+            this.txt_import_video.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.txt_import_video.Name = "txt_import_video";
             this.txt_import_video.ReadOnly = true;
-            this.txt_import_video.Size = new System.Drawing.Size(188, 21);
+            this.txt_import_video.Size = new System.Drawing.Size(286, 20);
             this.txt_import_video.TabIndex = 0;
             this.txt_import_video.TabStop = false;
             // 
@@ -333,9 +326,9 @@ namespace VideoToImage.forms
             // 
             this.btn_import_video.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_import_video.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_import_video.Location = new System.Drawing.Point(259, 3);
+            this.btn_import_video.Location = new System.Drawing.Point(292, 3);
             this.btn_import_video.Name = "btn_import_video";
-            this.btn_import_video.Size = new System.Drawing.Size(40, 30);
+            this.btn_import_video.Size = new System.Drawing.Size(34, 30);
             this.btn_import_video.TabIndex = 0;
             this.btn_import_video.TabStop = false;
             this.btn_import_video.UseVisualStyleBackColor = true;
@@ -352,7 +345,7 @@ namespace VideoToImage.forms
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(302, 28);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(329, 28);
             this.tableLayoutPanel6.TabIndex = 1;
             // 
             // prgb_state
@@ -361,7 +354,7 @@ namespace VideoToImage.forms
             this.prgb_state.Location = new System.Drawing.Point(0, 0);
             this.prgb_state.Margin = new System.Windows.Forms.Padding(0);
             this.prgb_state.Name = "prgb_state";
-            this.prgb_state.Size = new System.Drawing.Size(302, 28);
+            this.prgb_state.Size = new System.Drawing.Size(329, 28);
             this.prgb_state.Step = 1;
             this.prgb_state.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.prgb_state.TabIndex = 0;
@@ -377,7 +370,7 @@ namespace VideoToImage.forms
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(302, 518);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(329, 518);
             this.tableLayoutPanel7.TabIndex = 2;
             // 
             // tableLayoutPanel8
@@ -392,30 +385,69 @@ namespace VideoToImage.forms
             this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 3;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 81.81818F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(302, 518);
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.34749F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.915058F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.544402F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(329, 518);
             this.tableLayoutPanel8.TabIndex = 1;
             // 
             // tableLayoutPanel9
             // 
             this.tableLayoutPanel9.ColumnCount = 1;
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel9.Controls.Add(this.grd_frame_point, 0, 1);
             this.tableLayoutPanel9.Controls.Add(this.grd_videoFileList, 0, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
-            this.tableLayoutPanel9.RowCount = 1;
+            this.tableLayoutPanel9.RowCount = 2;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(302, 423);
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(329, 468);
             this.tableLayoutPanel9.TabIndex = 1;
+            // 
+            // grd_frame_point
+            // 
+            this.grd_frame_point.AllowUserToAddRows = false;
+            this.grd_frame_point.AllowUserToDeleteRows = false;
+            this.grd_frame_point.AllowUserToResizeColumns = false;
+            this.grd_frame_point.AllowUserToResizeRows = false;
+            this.grd_frame_point.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grd_frame_point.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.check,
+            this.dataGridViewTextBoxColumn1});
+            this.grd_frame_point.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grd_frame_point.Location = new System.Drawing.Point(3, 237);
+            this.grd_frame_point.Name = "grd_frame_point";
+            this.grd_frame_point.RowHeadersVisible = false;
+            this.grd_frame_point.RowTemplate.Height = 23;
+            this.grd_frame_point.Size = new System.Drawing.Size(323, 228);
+            this.grd_frame_point.TabIndex = 1;
+            this.grd_frame_point.TabStop = false;
+            this.grd_frame_point.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grd_frame_point_CellClick);
+            this.grd_frame_point.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grd_frame_point_KeyDown);
+            // 
+            // check
+            // 
+            this.check.HeaderText = "";
+            this.check.Name = "check";
+            this.check.Width = 20;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn1.HeaderText = "프레임";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // grd_videoFileList
             // 
             this.grd_videoFileList.AllowUserToAddRows = false;
             this.grd_videoFileList.AllowUserToDeleteRows = false;
+            this.grd_videoFileList.AllowUserToResizeColumns = false;
+            this.grd_videoFileList.AllowUserToResizeRows = false;
             this.grd_videoFileList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grd_videoFileList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.main});
@@ -425,40 +457,63 @@ namespace VideoToImage.forms
             this.grd_videoFileList.Name = "grd_videoFileList";
             this.grd_videoFileList.RowHeadersVisible = false;
             this.grd_videoFileList.RowTemplate.Height = 23;
-            this.grd_videoFileList.Size = new System.Drawing.Size(296, 417);
+            this.grd_videoFileList.Size = new System.Drawing.Size(323, 228);
             this.grd_videoFileList.TabIndex = 0;
             this.grd_videoFileList.TabStop = false;
             this.grd_videoFileList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grd_videoFileList_CellClick);
             this.grd_videoFileList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grd_videoFileList_KeyDown);
             // 
+            // main
+            // 
+            this.main.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.main.HeaderText = "파일이름";
+            this.main.Name = "main";
+            this.main.ReadOnly = true;
+            this.main.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.main.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // tableLayoutPanel10
             // 
             this.tableLayoutPanel10.ColumnCount = 3;
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.74834F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.45033F));
-            this.tableLayoutPanel10.Controls.Add(this.btn_make_jpg, 2, 0);
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel10.Controls.Add(this.btn_add_jpg, 1, 0);
+            this.tableLayoutPanel10.Controls.Add(this.btn_export_jpg, 2, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 423);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 468);
             this.tableLayoutPanel10.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 1;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(302, 47);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(329, 41);
             this.tableLayoutPanel10.TabIndex = 2;
             // 
-            // btn_make_jpg
+            // btn_add_jpg
             // 
-            this.btn_make_jpg.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_make_jpg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_make_jpg.Location = new System.Drawing.Point(206, 3);
-            this.btn_make_jpg.Name = "btn_make_jpg";
-            this.btn_make_jpg.Size = new System.Drawing.Size(93, 41);
-            this.btn_make_jpg.TabIndex = 0;
-            this.btn_make_jpg.TabStop = false;
-            this.btn_make_jpg.Text = "Export Frame";
-            this.btn_make_jpg.UseVisualStyleBackColor = true;
-            this.btn_make_jpg.Click += new System.EventHandler(this.btn_make_jpg_Click);
+            this.btn_add_jpg.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_add_jpg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_add_jpg.Location = new System.Drawing.Point(167, 3);
+            this.btn_add_jpg.Name = "btn_add_jpg";
+            this.btn_add_jpg.Size = new System.Drawing.Size(76, 35);
+            this.btn_add_jpg.TabIndex = 0;
+            this.btn_add_jpg.TabStop = false;
+            this.btn_add_jpg.Text = "Add";
+            this.btn_add_jpg.UseVisualStyleBackColor = true;
+            this.btn_add_jpg.Click += new System.EventHandler(this.btn_make_jpg_Click);
+            // 
+            // btn_export_jpg
+            // 
+            this.btn_export_jpg.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_export_jpg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_export_jpg.Location = new System.Drawing.Point(249, 3);
+            this.btn_export_jpg.Name = "btn_export_jpg";
+            this.btn_export_jpg.Size = new System.Drawing.Size(77, 35);
+            this.btn_export_jpg.TabIndex = 1;
+            this.btn_export_jpg.TabStop = false;
+            this.btn_export_jpg.Text = "Export";
+            this.btn_export_jpg.UseVisualStyleBackColor = true;
+            this.btn_export_jpg.Click += new System.EventHandler(this.btn_export_jpg_Click);
             // 
             // tableLayoutPanel11
             // 
@@ -474,19 +529,19 @@ namespace VideoToImage.forms
             this.tableLayoutPanel11.Controls.Add(this.lb_start_frame_value, 1, 0);
             this.tableLayoutPanel11.Controls.Add(this.lb_end_frame_value, 3, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(3, 473);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(3, 512);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 1;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(296, 42);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(323, 3);
             this.tableLayoutPanel11.TabIndex = 3;
             // 
             // btn_set_end
             // 
             this.btn_set_end.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_set_end.Location = new System.Drawing.Point(121, 3);
+            this.btn_set_end.Location = new System.Drawing.Point(131, 3);
             this.btn_set_end.Name = "btn_set_end";
-            this.btn_set_end.Size = new System.Drawing.Size(53, 36);
+            this.btn_set_end.Size = new System.Drawing.Size(58, 1);
             this.btn_set_end.TabIndex = 0;
             this.btn_set_end.TabStop = false;
             this.btn_set_end.Text = "끝점";
@@ -499,7 +554,7 @@ namespace VideoToImage.forms
             this.btn_set_start.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn_set_start.Location = new System.Drawing.Point(3, 3);
             this.btn_set_start.Name = "btn_set_start";
-            this.btn_set_start.Size = new System.Drawing.Size(53, 36);
+            this.btn_set_start.Size = new System.Drawing.Size(58, 1);
             this.btn_set_start.TabIndex = 0;
             this.btn_set_start.TabStop = false;
             this.btn_set_start.Text = "시작점";
@@ -509,9 +564,9 @@ namespace VideoToImage.forms
             // 
             // btn_make_clip
             // 
-            this.btn_make_clip.Location = new System.Drawing.Point(239, 3);
+            this.btn_make_clip.Location = new System.Drawing.Point(259, 3);
             this.btn_make_clip.Name = "btn_make_clip";
-            this.btn_make_clip.Size = new System.Drawing.Size(54, 36);
+            this.btn_make_clip.Size = new System.Drawing.Size(54, 1);
             this.btn_make_clip.TabIndex = 0;
             this.btn_make_clip.TabStop = false;
             this.btn_make_clip.Text = "클립";
@@ -523,9 +578,9 @@ namespace VideoToImage.forms
             // 
             this.lb_start_frame_value.AutoSize = true;
             this.lb_start_frame_value.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lb_start_frame_value.Location = new System.Drawing.Point(62, 0);
+            this.lb_start_frame_value.Location = new System.Drawing.Point(67, 0);
             this.lb_start_frame_value.Name = "lb_start_frame_value";
-            this.lb_start_frame_value.Size = new System.Drawing.Size(53, 42);
+            this.lb_start_frame_value.Size = new System.Drawing.Size(58, 3);
             this.lb_start_frame_value.TabIndex = 0;
             this.lb_start_frame_value.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lb_start_frame_value.Visible = false;
@@ -534,9 +589,9 @@ namespace VideoToImage.forms
             // 
             this.lb_end_frame_value.AutoSize = true;
             this.lb_end_frame_value.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lb_end_frame_value.Location = new System.Drawing.Point(180, 0);
+            this.lb_end_frame_value.Location = new System.Drawing.Point(195, 0);
             this.lb_end_frame_value.Name = "lb_end_frame_value";
-            this.lb_end_frame_value.Size = new System.Drawing.Size(53, 42);
+            this.lb_end_frame_value.Size = new System.Drawing.Size(58, 3);
             this.lb_end_frame_value.TabIndex = 0;
             this.lb_end_frame_value.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lb_end_frame_value.Visible = false;
@@ -551,21 +606,12 @@ namespace VideoToImage.forms
             this.timer_prog_state.Interval = 2000;
             this.timer_prog_state.Tick += new System.EventHandler(this.timer_prog_state_Tick);
             // 
-            // main
-            // 
-            this.main.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.main.HeaderText = "파일이름";
-            this.main.Name = "main";
-            this.main.ReadOnly = true;
-            this.main.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.main.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // main_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1262, 582);
+            this.ClientSize = new System.Drawing.Size(1289, 582);
             this.Controls.Add(this.tableLayoutPanel1);
             this.KeyPreview = true;
             this.Name = "main_form";
@@ -584,6 +630,7 @@ namespace VideoToImage.forms
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grd_frame_point)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grd_videoFileList)).EndInit();
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel11.ResumeLayout(false);
@@ -599,7 +646,6 @@ namespace VideoToImage.forms
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Label lb_import_video;
         private System.Windows.Forms.TextBox txt_import_video;
         private System.Windows.Forms.Button btn_import_video;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
@@ -610,7 +656,7 @@ namespace VideoToImage.forms
         private System.Windows.Forms.Timer timer_player;
         private System.Windows.Forms.Button btn_playerReset;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private System.Windows.Forms.Button btn_make_jpg;
+        private System.Windows.Forms.Button btn_add_jpg;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
@@ -630,5 +676,9 @@ namespace VideoToImage.forms
         private System.Windows.Forms.Button btn_1second_back_play;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.DataGridViewTextBoxColumn main;
+        private System.Windows.Forms.DataGridView grd_frame_point;
+        private System.Windows.Forms.Button btn_export_jpg;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn check;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
     }
 }

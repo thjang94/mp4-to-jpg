@@ -24,11 +24,13 @@ namespace VideoToImage.forms
         int _nowFrame = 0;                         // 현재 표출되는 프레임
 
         int[] _clipFrame = {-1, -1};               // {시작 프레임, 종료 프레임}
-        int _getFrame = -1;                        // 추출 프레임
+        List<int> _getFrame = new List<int>();                        // 추출 프레임
 
         int progressValue = 0;                     // 상태바의 값
 
         bool isGetFile = false;                    // 파일 탐색기 사용 여부
+
+        string _basePath = @"d:\";
 
         public main_form()
         {
@@ -65,7 +67,8 @@ namespace VideoToImage.forms
             this.btn_1frame_play.GotFocus       += Control1_GotFocus;
             this.btn_1second_play.GotFocus      += Control1_GotFocus;
             this.tcb_videoPlayer.GotFocus       += Control1_GotFocus;
-            this.btn_make_jpg.GotFocus          += Control1_GotFocus;
+            this.btn_add_jpg.GotFocus           += Control1_GotFocus;
+            this.btn_export_jpg.GotFocus           += Control1_GotFocus;
             this.btn_set_start.GotFocus         += Control1_GotFocus;
             this.btn_set_end.GotFocus           += Control1_GotFocus;
             this.btn_make_clip.GotFocus         += Control1_GotFocus;
@@ -77,7 +80,8 @@ namespace VideoToImage.forms
             toolTip1.SetToolTip(btn_play              , "space");
             toolTip1.SetToolTip(btn_1frame_play       , "right");
             toolTip1.SetToolTip(btn_1second_play      , "ctrl + right");
-            toolTip1.SetToolTip(btn_make_jpg          , "enter");
+            toolTip1.SetToolTip(btn_add_jpg          , "F4"); 
+            toolTip1.SetToolTip(btn_export_jpg, "enter");
         }
         /// <summary>
         ///  버튼 이미지 세팅 함수.
@@ -124,9 +128,11 @@ namespace VideoToImage.forms
             FileDialogModule fileDialogModule = new FileDialogModule();
 
             // 파일 탐색기를 열고 선택한 동영상의 주소값을 반환.
-            _videoInfoList = fileDialogModule.getVideoPathInFolder();
+            List<FileInfo> tempVideoInfoList = fileDialogModule.getVideoPathInFolder(_basePath);
             // 동영상 파일이 없다면 종료
-            if (_videoInfoList == null) return;
+            if (tempVideoInfoList == null) return;
+            _videoInfoList = tempVideoInfoList;
+            _basePath = _videoInfoList[0].DirectoryName;
 
             _video = new VideoCapture(_videoInfoList[0].FullName);
  
@@ -182,7 +188,7 @@ namespace VideoToImage.forms
             // 선택된 비디오다면 종료
             if (_video == null) return;
 
-            int move = -60;
+            int move = -10;
 
             if (_nowFrame + move <= 0) move = _nowFrame * -1;
 
@@ -194,7 +200,7 @@ namespace VideoToImage.forms
             // 선택된 비디오다면 종료
             if (_video == null) return;
 
-            int move = 60;
+            int move = 10;
 
             if (_nowFrame + move >= _video.FrameCount - 1) move = _video.FrameCount - 1 - _nowFrame;
 
@@ -205,7 +211,7 @@ namespace VideoToImage.forms
         /// </summary>
         private void timer_player_Tick(object sender, EventArgs e)
         {
-            if(_video.PosFrames == _video.FrameCount || !_isPlayer)
+            if(_video.PosFrames >= _video.FrameCount || !_isPlayer)
             {
                 timer_player.Stop();
                 this.btn_play.Image = _playButtonImage[0];
@@ -266,18 +272,25 @@ namespace VideoToImage.forms
         /// </summary>
         public void changePreview()
         {
-            lb_now_frame_value.Text = _nowFrame.ToString();
+            try
+            {
+                lb_now_frame_value.Text = (_nowFrame + 1).ToString();
 
-            Mat frame = new Mat();
-            _video.Read(frame);
+                Mat frame = new Mat();
+                _video.Read(frame);
 
-            if (pic_preview.Image != null)
-                pic_preview.Image.Dispose();
+                if (pic_preview.Image != null)
+                    pic_preview.Image.Dispose();
 
-            Cv2.Resize(frame, frame, new OpenCvSharp.Size(this.pic_preview.Width, this.pic_preview.Height));
-            pic_preview.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(frame);
+                Cv2.Resize(frame, frame, new OpenCvSharp.Size(this.pic_preview.Width, this.pic_preview.Height));
+                pic_preview.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(frame);
 
-            frame.Dispose();
+                frame.Dispose();
+            }
+            catch(Exception e)
+            {
+
+            }
         }
         /// <summary>
         ///  선택된 위치로 프리뷰 출력.
@@ -320,7 +333,12 @@ namespace VideoToImage.forms
 
             tcb_videoPlayer.Maximum = _video.FrameCount - 1;
 
-            if (_video.FrameCount < _nowFrame) _nowFrame = _video.FrameCount - 1;
+            if (_video.FrameCount - 1 < _nowFrame)
+            {
+                int temp = _nowFrame + 1;
+                MessageBox.Show(temp + "번 프레임이 없습니다.");
+                _nowFrame = _video.FrameCount - 1;
+            }
 
             if (_clipFrame[1] > -1)
             {
@@ -334,15 +352,36 @@ namespace VideoToImage.forms
         #endregion
         #region 한 프레임 jpg 추출.
         /// <summary>
-        /// 프레임 추출 버튼. 현재 위치의 프레임을 추출한다.
+        /// 현재 위치의 프레임을 표에 추가한다.
         /// </summary>
         private void btn_make_jpg_Click(object sender, EventArgs e)
         {
-            if (_video == null || _nowFrame < 0) return;
+            // 선택된 비디오가 없으면 종료
+            if (_video == null) return;
 
-            _getFrame = _nowFrame;
+            for (int i = 0; i < grd_frame_point.Rows.Count; i++)
+                if (grd_frame_point.Rows[i].Cells[1].Value.Equals(_nowFrame+1)) return;
+
+            grd_frame_point.Rows.Add(true, _nowFrame + 1);
+        }
+        /// <summary>
+        /// 프레임 추출 버튼. 현재 위치의 프레임을 EXPORT한다.
+        /// </summary>
+        private void btn_export_jpg_Click(object sender, EventArgs e)
+        {
+            if (_video == null || _nowFrame < 0 || isGetFile == true) return;
+
+            isGetFile = true;
+
+            for (int i = 0; i < grd_frame_point.Rows.Count; i++)
+                if ((bool)grd_frame_point.Rows[i].Cells[0].Value)
+                    _getFrame.Add(Convert.ToInt32(grd_frame_point.Rows[i].Cells[1].Value));
 
             prgb_state.Maximum += _videoInfoList.Count * 2;
+
+            Console.WriteLine(prgb_state.Maximum);
+
+            setInfoText(_videoInfoList[0].DirectoryName + '\\' + "FrameInfo.txt");
 
             foreach (FileInfo videoInfo in _videoInfoList)
             {
@@ -352,32 +391,41 @@ namespace VideoToImage.forms
                     Task task = getFrame(videoInfo);
                 });
             }
-            setInfoText(_videoInfoList[0].DirectoryName + '\\' + "FrameInfo.txt", _getFrame.ToString());
-            isGetFile = true;
+
+            grd_frame_point.Rows.Clear();
         }
+
+
         /// <summary>
         /// 현재 위치의 프레임을 추출하는 비동기 메서드.
         /// </summary>
         private async Task getFrame(FileInfo videoInfo)
         {
+            VideoCapture videoCapture = new VideoCapture(videoInfo.FullName);
             try
             {
-                VideoCapture videoCapture = new VideoCapture(videoInfo.FullName);
-                videoCapture.PosFrames = _getFrame;
+                foreach (int frame in _getFrame)
+                {
+                    videoCapture.PosFrames = frame - 1;
 
-                Mat frame = new Mat(); ;
-                videoCapture.Read(frame);
-                string[] videoName = videoInfo.Name.Split('.');
-                frame.SaveImage(videoInfo.DirectoryName + '\\' + _getFrame + "_" + videoName[0] + ".jpg");
-
-                frame.Dispose();
-                videoCapture.Release();
-            }catch(Exception e)
+                    Mat mFrame = new Mat(); ;
+                    if (!videoCapture.Read(mFrame))
+                    {
+                        MessageBox.Show(videoInfo.Name + "영상의 의"+ frame +"번 프레임이 없습니다.");
+                        return;
+                    }
+                    string[] videoName = videoInfo.Name.Split('.');
+                    mFrame.SaveImage(videoInfo.DirectoryName + '\\' + videoName[0] + "_frame" + frame + ".jpg");
+                }
+            }
+            catch (Exception e)
             {
-                MessageBox.Show(videoInfo.Name + "의 " + _getFrame + "번 프레임 jpg 생성 실패");
+                Console.WriteLine(e);
+                MessageBox.Show(videoInfo.Name + "의 jpg 생성 실패.");
             }
             finally
             {
+                videoCapture.Release();
                 progressValue++;
             }
         }
@@ -387,14 +435,38 @@ namespace VideoToImage.forms
         /// </summary>
         /// <param name="path">저장 주소</param>
         /// <param name="word">텍스트 내용</param>
-        private void setInfoText(string path, string word)
+        private void setInfoText(string path)
         {
-            if (!File.Exists(path))
-                using (File.Create(path));
+            List<string> importWord = new List<string>();
+            if (File.Exists(path))
+            {
+
+                StreamReader txtReader = File.OpenText(path);
+                
+                while (!txtReader.EndOfStream)
+                    importWord.Add(txtReader.ReadLine());
+
+                txtReader.Close();
+            }
+
+            using (File.Create(path)) ;
+
+            SortedSet<int> resultWord = new SortedSet<int>(_getFrame);
 
             StreamWriter writer;
             writer = File.AppendText(path);
-            writer.WriteLine(word);
+            
+            for(int i = 2; i< importWord.Count; i++)
+                resultWord.Add(Convert.ToInt32(importWord[i]));
+
+            writer.WriteLine(resultWord.Count); // 토탈 개수
+            String[] name = path.Split('\\');   
+            writer.WriteLine(name[name.Length - 2]); // 파일명
+
+            // frame
+            foreach (int frame in resultWord)
+                writer.WriteLine(frame);
+
             writer.Close();
         }
 
@@ -503,6 +575,7 @@ namespace VideoToImage.forms
                 this.prgb_state.Maximum = progressValue;
 
                 isGetFile = false;
+                _getFrame.Clear();
             }
 
             this.prgb_state.Value = progressValue;
@@ -522,16 +595,16 @@ namespace VideoToImage.forms
             if (this.Focus()) Console.WriteLine(this.Name);
             
             if (e.Control && e.KeyCode == Keys.Left)
-            {            
-                int move = -60;
+            {
+                int move = -10;
 
                 if (_nowFrame + move <= 0) move = _nowFrame * -1;
 
                 moveFrame(move);
             }
-            if (e.Control && e.KeyCode == Keys.Right)
+            else if (e.Control && e.KeyCode == Keys.Right)
             {
-                int move = 60;
+                int move = 10;
 
                 if (_nowFrame + move >= _video.FrameCount - 1) move = _video.FrameCount - 1 - _nowFrame;
 
@@ -565,11 +638,19 @@ namespace VideoToImage.forms
             }
             else if (e.KeyCode.Equals(Keys.Enter))
             {
-                if (_nowFrame < 0) return;
+                if (_video == null || _nowFrame < 0 || isGetFile == true) return;
 
-                _getFrame = _nowFrame;
+                isGetFile = true;
+
+                for (int i = 0; i < grd_frame_point.Rows.Count; i++)
+                    if ((bool)grd_frame_point.Rows[i].Cells[0].Value)
+                        _getFrame.Add(Convert.ToInt32(grd_frame_point.Rows[i].Cells[1].Value));
 
                 prgb_state.Maximum += _videoInfoList.Count * 2;
+
+                Console.WriteLine(prgb_state.Maximum);
+
+                setInfoText(_videoInfoList[0].DirectoryName + '\\' + "FrameInfo.txt");
 
                 foreach (FileInfo videoInfo in _videoInfoList)
                 {
@@ -579,8 +660,15 @@ namespace VideoToImage.forms
                         Task task = getFrame(videoInfo);
                     });
                 }
-                setInfoText(_videoInfoList[0].DirectoryName + '\\' + "FrameInfo.txt", _getFrame.ToString());
-                isGetFile = true;
+
+                grd_frame_point.Rows.Clear();
+            }
+            else if(e.KeyCode.Equals(Keys.F4))
+            {
+                for (int i = 0; i < grd_frame_point.Rows.Count; i++)
+                    if (grd_frame_point.Rows[i].Cells[1].Value.Equals(_nowFrame + 1)) return;
+
+                grd_frame_point.Rows.Add(true, _nowFrame + 1);
             }
         }
 
@@ -589,7 +677,9 @@ namespace VideoToImage.forms
         /// </summary>
         private void grd_videoFileList_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyData == Keys.Enter || e.KeyData == Keys.Up || e.KeyData == Keys.Down)
+            if (_video == null || grd_videoFileList.Rows.Count <= 0) return;
+
+            if (e.KeyData == Keys.Enter || e.KeyData == Keys.Up || e.KeyData == Keys.Down)
             {
                 int column = grd_videoFileList.CurrentCell.ColumnIndex;
                 int row = grd_videoFileList.CurrentCell.RowIndex;
@@ -598,6 +688,41 @@ namespace VideoToImage.forms
             }
         }
         #endregion
+
+        private void grd_frame_point_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_video == null || _nowFrame < 0 || e.RowIndex.Equals(-1) || e.ColumnIndex.Equals(0)) return;
+
+            _nowFrame = Convert.ToInt32(grd_frame_point.Rows[e.RowIndex].Cells[1].Value) - 1;
+            _video.PosFrames = _nowFrame;
+            tcb_videoPlayer.Value = _nowFrame;
+            changePreview();
+        }
+
+        private void grd_frame_point_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (_video == null || grd_frame_point.Rows.Count <= 0) return;
+
+            // 체크 박스와 플레이어의 동시 작동을 막기 위함.
+            if (e.KeyData == Keys.Space)
+            {
+                if (grd_frame_point.CurrentCell.ColumnIndex.Equals(0))
+                {
+                    int column = grd_frame_point.CurrentCell.ColumnIndex;
+                    int row = grd_frame_point.CurrentCell.RowIndex;
+                    grd_frame_point.CurrentCell = grd_frame_point[1, row];
+                    e.Handled = true;
+                }
+            }
+            // 키보드 이동을 막기 위함.
+            else if (e.KeyData == Keys.Enter || e.KeyData == Keys.Up || e.KeyData == Keys.Down || e.KeyData == Keys.Left || e.KeyData == Keys.Right)
+            {
+                int column = grd_frame_point.CurrentCell.ColumnIndex;
+                int row = grd_frame_point.CurrentCell.RowIndex;
+                grd_frame_point.CurrentCell = grd_frame_point[column, row];
+                e.Handled = true;
+            }
+        }
     }
 }
 

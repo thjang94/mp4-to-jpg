@@ -61,12 +61,12 @@ namespace VideoToImage.modules
         /// 파일 다이얼로그를 열고 선택한 동영상의 주소를 반환.
         /// </summary>
         /// <returns> 선택한 이미지의 주소 배열 반환, 오류시 null 반환 </returns>
-        public List<FileInfo> getVideoPathInFolder()
+        public List<FileInfo> getVideoPathInFolder(string basePath)
         {
             List<FileInfo> fileInfo = new List<FileInfo>();
             FolderBrowserDialog openFileDialog = new FolderBrowserDialog();
 
-            openFileDialog.SelectedPath = @"d:\";
+            openFileDialog.SelectedPath = basePath;
 
             // 파일을 가져왔는지 체크
             if (openFileDialog.ShowDialog() != DialogResult.OK)
