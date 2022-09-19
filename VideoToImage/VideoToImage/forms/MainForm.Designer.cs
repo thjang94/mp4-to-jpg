@@ -616,6 +616,7 @@ namespace VideoToImage.forms
             this.KeyPreview = true;
             this.Name = "main_form";
             this.Text = "EXPORT JPG";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_form_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.getFrameForm_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

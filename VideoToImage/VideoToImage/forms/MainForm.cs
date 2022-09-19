@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using VideoToImage.modules;
+using VideoToImage.modules;using System.ComponentModel;
 
 namespace VideoToImage.forms
 {
@@ -24,7 +25,7 @@ namespace VideoToImage.forms
         int _nowFrame = 0;                         // 현재 표출되는 프레임
 
         int[] _clipFrame = {-1, -1};               // {시작 프레임, 종료 프레임}
-        List<int> _getFrame = new List<int>();                        // 추출 프레임
+        List<int> _getFrame = new List<int>();     // 추출 프레임
 
         int progressValue = 0;                     // 상태바의 값
 
@@ -68,7 +69,7 @@ namespace VideoToImage.forms
             this.btn_1second_play.GotFocus      += Control1_GotFocus;
             this.tcb_videoPlayer.GotFocus       += Control1_GotFocus;
             this.btn_add_jpg.GotFocus           += Control1_GotFocus;
-            this.btn_export_jpg.GotFocus           += Control1_GotFocus;
+            this.btn_export_jpg.GotFocus        += Control1_GotFocus;
             this.btn_set_start.GotFocus         += Control1_GotFocus;
             this.btn_set_end.GotFocus           += Control1_GotFocus;
             this.btn_make_clip.GotFocus         += Control1_GotFocus;
@@ -129,8 +130,16 @@ namespace VideoToImage.forms
 
             // 파일 탐색기를 열고 선택한 동영상의 주소값을 반환.
             List<FileInfo> tempVideoInfoList = fileDialogModule.getVideoPathInFolder(_basePath);
+
             // 동영상 파일이 없다면 종료
             if (tempVideoInfoList == null) return;
+            tempVideoInfoList = fileDialogModule.convertFileName(tempVideoInfoList, ".", "#");
+            if (_video != null)
+            {
+                _video.Dispose();
+                fileDialogModule.convertfolderInFileName(_videoInfoList[0].Directory, "#", ".");
+            }
+
             _videoInfoList = tempVideoInfoList;
             _basePath = _videoInfoList[0].DirectoryName;
 
@@ -402,20 +411,25 @@ namespace VideoToImage.forms
         private async Task getFrame(FileInfo videoInfo)
         {
             VideoCapture videoCapture = new VideoCapture(videoInfo.FullName);
+
             try
             {
                 foreach (int frame in _getFrame)
-                {
+                { 
+                    Mat mFrame = new Mat();
                     videoCapture.PosFrames = frame - 1;
 
-                    Mat mFrame = new Mat(); ;
                     if (!videoCapture.Read(mFrame))
                     {
-                        MessageBox.Show(videoInfo.Name + "영상의 의"+ frame +"번 프레임이 없습니다.");
+                        MessageBox.Show(videoInfo.Name + "영상의 "+ frame +"번 프레임이 없습니다.");
                         return;
                     }
                     string[] videoName = videoInfo.Name.Split('.');
                     mFrame.SaveImage(videoInfo.DirectoryName + '\\' + videoName[0] + "_frame" + frame + ".jpg");
+                    // OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mFrame).Save(videoInfo.DirectoryName + '\\' + videoName[0] + "_frame" + frame + ".jpg");
+
+                    mFrame.Dispose();
+                    
                 }
             }
             catch (Exception e)
@@ -722,6 +736,13 @@ namespace VideoToImage.forms
                 grd_frame_point.CurrentCell = grd_frame_point[column, row];
                 e.Handled = true;
             }
+        }
+
+        private void main_form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FileDialogModule fileDialogModule = new FileDialogModule();
+            _video.Dispose();
+            fileDialogModule.convertfolderInFileName(_videoInfoList[0].Directory, "#", ".");
         }
     }
 }

@@ -92,7 +92,51 @@ namespace VideoToImage.modules
             return fileInfo;
         }
 
+        public List<FileInfo> convertFileName(List<FileInfo> oldFileInfoList, String convertChar, String resultConverChar)
+        {
+            List<FileInfo> resultFileInfoList = new List<FileInfo>();
 
+            foreach (FileInfo oldFileInfo in oldFileInfoList)
+            {
+                if (System.IO.File.Exists(oldFileInfo.FullName))
+                {
+                    String tempName = "";
+                    String[] newTempName = oldFileInfo.Name.Split('.');
+                    for (int i = 0; i < newTempName.Length - 1; i++)
+                    {
+                        tempName += newTempName[i];
+                        if (i < newTempName.Length - 2) tempName += ".";
+                    }
+
+                    String newFileName = tempName.Replace(convertChar, resultConverChar);
+                    System.IO.File.Move(oldFileInfo.FullName, oldFileInfo.DirectoryName + "\\" + newFileName + oldFileInfo.Extension);
+
+                    resultFileInfoList.Add(new FileInfo(oldFileInfo.DirectoryName + "\\" + newFileName + oldFileInfo.Extension));
+                }
+            }
+
+            return resultFileInfoList;
+        }
+
+        public List<FileInfo> convertfolderInFileName(DirectoryInfo oldFilePath, String convertChar, String resultConverChar)
+        {
+            List<FileInfo> resultFileInfoList = new List<FileInfo>();
+            List<FileInfo> oldFileInfoList = new List<FileInfo>();
+
+            if (oldFilePath.Exists)
+            {
+                foreach (string tempFileName in Directory.GetFiles(oldFilePath.FullName))
+                {
+                    FileInfo tempFile = new FileInfo(tempFileName);
+                    if (tempFile.Extension.Equals(".txt")) continue;
+
+                    oldFileInfoList.Add(tempFile);
+                }
+
+            }
+
+            return convertFileName(oldFileInfoList, convertChar, resultConverChar);
+        }
 
     }
 }

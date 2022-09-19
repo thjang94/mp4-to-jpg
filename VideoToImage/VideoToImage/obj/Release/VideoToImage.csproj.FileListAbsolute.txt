@@ -120,7 +120,6 @@ C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Release\System.
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Release\System.Numerics.Vectors.xml
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Release\System.ValueTuple.xml
-C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Release\VideoToImage.csprojAssemblyReference.cache
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Release\VideoToImage.Form1.resources
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Release\VideoToImage.forms.main_form.resources
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Release\VideoToImage.Properties.Resources.resources

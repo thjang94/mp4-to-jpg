@@ -94,14 +94,6 @@ C:\develop\c#_workspace\clip-generator\VideoToImage\VideoToImage\bin\Debug\Micro
 C:\develop\c#_workspace\clip-generator\VideoToImage\VideoToImage\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
 C:\develop\c#_workspace\clip-generator\VideoToImage\VideoToImage\bin\Debug\Microsoft.WindowsAPICodePack.xml
 C:\develop\c#_workspace\clip-generator\VideoToImage\VideoToImage\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml
-C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.csprojAssemblyReference.cache
-C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.Form1.resources
-C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.forms.main_form.resources
-C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.Properties.Resources.resources
-C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.csproj.GenerateResource.cache
-C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.csproj.CoreCompileInputs.cache
-C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.exe
-C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.pdb
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Debug\dll\x86\OpenCvSharpExtern.dll
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Debug\dll\x86\opencv_videoio_ffmpeg452.dll
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Debug\dll\x64\OpenCvSharpExtern.dll
@@ -128,4 +120,12 @@ C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Debug\System.Me
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Debug\System.Numerics.Vectors.xml
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\bin\Debug\System.ValueTuple.xml
+C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.Form1.resources
+C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.forms.main_form.resources
+C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.Properties.Resources.resources
+C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.csproj.GenerateResource.cache
+C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.csproj.CoreCompileInputs.cache
 C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.csproj.CopyComplete
+C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.exe
+C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.pdb
+C:\develop\c#_workspace\mp4-to-jpg\VideoToImage\VideoToImage\obj\Debug\VideoToImage.csprojAssemblyReference.cache
